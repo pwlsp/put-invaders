@@ -1,1 +1,1 @@
-- [ ] zrobić TODO
+- [ ] zrobić pociski, na które będzie można reagować

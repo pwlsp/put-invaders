@@ -1,13 +1,15 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
-
-#include "../include/config.h"
+#include <cmath>
 
 #include "../include/Spaceship.h"
 
 Spaceship::Spaceship()
 {
-    if (!texture.loadFromFile("../res/base-spaceship.png"))
+    x = (SCREEN_WIDTH - SPACESHIP_SIZE) / 2;
+    y = SCREEN_HEIGHT - SPACESHIP_SIZE;
+    speed = SS_INITIAL_SPEED;
+
+    if (!texture.loadFromFile("res/spaceships/tie.png"))
     {
         std::cout << "File opening error\n";
     }
@@ -27,17 +29,11 @@ void Spaceship::update()
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) == true)
     {
-        x = std::max<int>(x - 1, 0);
+        x = std::max<float>(x - speed, 0.0);
     }
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) == true)
     {
-        x = std::min<int>(x + 1, SCREEN_WIDTH-SPACESHIP_SIZE);
+        x = std::min<float>(x + speed, SCREEN_WIDTH-SPACESHIP_SIZE);
     }
-}
-
-void Spaceship::spawn()
-{
-    x = (SCREEN_WIDTH - SPACESHIP_SIZE) / 2;
-    y = SCREEN_HEIGHT - SPACESHIP_SIZE;
 }

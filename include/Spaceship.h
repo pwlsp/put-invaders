@@ -8,12 +8,12 @@ private:
     sf::Sprite sprite;
     sf::Texture texture;
 
-    unsigned short x;
-    unsigned short y;
+    float x;
+    float y;
+    float speed;
 
 public:
     Spaceship();
     void draw(sf::RenderWindow &window);
     void update();
-    void spawn();
 };

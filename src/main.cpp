@@ -4,12 +4,10 @@
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
-    sf::CircleShape shape(100.f);
-    // shape.setFillColor(sf::Color::Magenta);
 
     Spaceship spaceship;
-    spaceship.spawn();
 
+    // # The Game Loop
     while (window.isOpen())
     {
         // # Managing window closing
@@ -19,9 +17,8 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-
+        
         window.clear();
-        // window.draw(shape);
         spaceship.update();
         spaceship.draw(window);
         window.display();
