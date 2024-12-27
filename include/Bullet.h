@@ -6,12 +6,11 @@
 
 class Bullet
 {
-private:
+public:
     float x;
     float y;
-
-public:
-    Bullet(){
-        
+    Bullet(float set_x, float set_y){
+        x = set_x;
+        y = set_y;
     }
 };
