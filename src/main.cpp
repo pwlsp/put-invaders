@@ -7,7 +7,7 @@ int main()
 
     Spaceship spaceship;
     Enemy enemy;
-    //std::vector<Enemy> enemies; //daæ, ¿e siê pojawiaj¹ siê
+    //std::vector<Enemy> enemies; 
 
     // # The Game Loop
     while (window.isOpen())
@@ -23,8 +23,13 @@ int main()
         window.clear();
         spaceship.update();
         spaceship.draw(window);
+        //wszystkie enemies musza byc zupsatowane
+        //dodawane po pewnym okresie czasu
         enemy.update();
-        enemy.draw(window);
+       /* if (enemies.size() < 5) 
+        {*/
+            enemy.draw(window);
+        /*}*/
         
         window.display();
     }

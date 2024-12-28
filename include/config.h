@@ -11,3 +11,4 @@ constexpr float SS_INITIAL_SPEED = 0.3;
 constexpr float BULLET_SPEED = 0.6;
 
 constexpr unsigned short ENEMY_SIZE = 50;
+constexpr float ENEMY_SPEED = 0.4;

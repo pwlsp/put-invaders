@@ -8,7 +8,7 @@ Enemy::Enemy()//unsigned short RANDOM_POS, unsigned short ENEMY_SIZE)
     x = 0;
     //x = (RANDOM_POS - ENEMY_SIZE) ; //tutaj gdzie sie pojawia
     y = 0;
-    speed = SS_INITIAL_SPEED;
+    speed = ENEMY_SPEED;
 
     if (!texture.loadFromFile("r"))
     {
@@ -22,8 +22,10 @@ Enemy::Enemy()//unsigned short RANDOM_POS, unsigned short ENEMY_SIZE)
 void Enemy::update()
 {
     std::cout << "ok\n";
+   // x = x - 0.01;
+    y = y + 0.1;
    //spada
-
+    //jesli healbar == 0, to wtedy umiera i mo¿e nowy byæ wstawiony
     
 }
 
