@@ -13,9 +13,10 @@ private:
     float x;
     float y;
     float speed;
+    float enemySize;
 
 public:
-    Enemy();//unsigned short RANDOM_POS, unsigned short ENEMY_SIZE);
+    Enemy(std::mt19937& gen, std::uniform_int_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes);//unsigned short randomPos, unsigned short enemySize);
     void draw(sf::RenderWindow& window);
     void update();
 };

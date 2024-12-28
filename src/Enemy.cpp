@@ -1,14 +1,17 @@
 #include <iostream>
 #include <cmath>
+#include <random>
 
 #include "../include/Enemy.h"
 
-Enemy::Enemy()//unsigned short RANDOM_POS, unsigned short ENEMY_SIZE)
+Enemy::Enemy(std::mt19937& gen, std::uniform_int_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes)//unsigned short randomPos, unsigned short enemySize)
 {
-    x = 0;
-    //x = (RANDOM_POS - ENEMY_SIZE) ; //tutaj gdzie sie pojawia
+    //initial position
+    x = dist1(gen);
     y = 0;
-    speed = ENEMY_SPEED;
+    //speed = ENEMY_SPEED;
+    enemySize = enemySizes[dist2(gen)];
+    std::cout << enemySizes.size() << " " << enemySize << "\n";
 
     if (!texture.loadFromFile("r"))
     {
@@ -21,7 +24,7 @@ Enemy::Enemy()//unsigned short RANDOM_POS, unsigned short ENEMY_SIZE)
 
 void Enemy::update()
 {
-    std::cout << "ok\n";
+    //std::cout << "ok\n";
    // x = x - 0.01;
     y = y + 0.1;
    //spada, 

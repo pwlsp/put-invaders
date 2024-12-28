@@ -5,15 +5,24 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
-    Spaceship spaceship;
-    Enemy enemy;
+  
     //std::vector<Enemy> enemies; 
 
+    std::vector<int> enemySizes = { 30,40,50 };
+
     std::chrono::microseconds lag(0);
-
     std::chrono::steady_clock::time_point previousTime;
-
     previousTime  = std::chrono::steady_clock::now();
+
+    std::random_device rd;  // Obtain a random seed from the hardware
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist1(5, SCREEN_WIDTH-5);
+    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1);
+    
+
+    Spaceship spaceship;
+    //unsigned short randomPos, enemySize;
+    Enemy enemy(gen, dist1, dist2, enemySizes);
 
     // # The Game Loop
     while (window.isOpen())
@@ -27,7 +36,7 @@ int main()
         sf::Event event;
         while (FRAME_DURATION <= lag)
         {
-            std::cout << "Frame rate\n";
+            //std::cout << "Frame rate\n";
             lag -= FRAME_DURATION;
 
             while (window.pollEvent(event))
