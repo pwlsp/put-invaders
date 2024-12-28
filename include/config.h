@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+
 constexpr unsigned short SCREEN_WIDTH = 1100;
 constexpr unsigned short SCREEN_HEIGHT = 850;
 constexpr unsigned short SPACESHIP_SIZE = 50;
@@ -12,3 +14,5 @@ constexpr float BULLET_SPEED = 0.6;
 
 constexpr unsigned short ENEMY_SIZE = 50;
 constexpr float ENEMY_SPEED = 0.4;
+
+constexpr std::chrono::microseconds FRAME_DURATION(1666);

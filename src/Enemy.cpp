@@ -24,7 +24,8 @@ void Enemy::update()
     std::cout << "ok\n";
    // x = x - 0.01;
     y = y + 0.1;
-   //spada
+   //spada, 
+   // //jeœli dotrze na sam dol to game over?
     //jesli healbar == 0, to wtedy umiera i mo¿e nowy byæ wstawiony
     
 }
