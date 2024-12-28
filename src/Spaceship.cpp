@@ -9,7 +9,7 @@ Spaceship::Spaceship()
     y = SCREEN_HEIGHT - SPACESHIP_SIZE - 5.0;
     speed = SS_INITIAL_SPEED;
 
-    if (!texture.loadFromFile("res/spaceships/red.png"))
+    if (!texture.loadFromFile("r"))
     {
         std::cout << "File opening error\n";
     }
@@ -17,7 +17,7 @@ Spaceship::Spaceship()
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, SPACESHIP_SIZE, SPACESHIP_SIZE));
 
-    if (!weaponry.bullet_texture.loadFromFile("res/bullets/green.png"))
+    if (!weaponry.bullet_texture.loadFromFile("res/green.png"))
     {
         std::cout << "File opening error\n";
     }

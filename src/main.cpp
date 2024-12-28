@@ -8,7 +8,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
-    int frameCount = 0, spawnInterval = 2000, enemyCount = 1, activeEnemies = 0;
+    int frameCount = 0, spawnInterval = 4000, enemyCount = 1, activeEnemies = 0;
 
     std::vector<Enemy> enemies; 
 
@@ -44,12 +44,12 @@ int main()
         sf::Event event;
         while (FRAME_DURATION <= lag)
         {
-            std::cout << "Frame count\t " << frameCount << "\n";
+            //std::cout << "Frame count\t " << frameCount << "\n";
             lag -= FRAME_DURATION;
 
             while (window.pollEvent(event))
             {
-                std::cout << "check game over\t" << gameOver << "\n";
+                //std::cout << "check game over\t" << gameOver << "\n";
                 if (event.type == sf::Event::Closed or gameOver)
                 {
                     window.close();
@@ -61,7 +61,7 @@ int main()
             {
                 if (frameCount % spawnInterval == 0 && activeEnemies < enemies.size())
                 {
-                    std::cout << "NEW ENEMY APPEARED\n" << "\t" << enemyCount << " " << activeEnemies << "\n";
+                    //std::cout << "NEW ENEMY APPEARED\n" << "\t" << enemyCount << " " << activeEnemies << "\n";
                     enemies[enemyCount].visibility = 1;
                     activeEnemies++;
                     if (enemyCount + 1 == enemies.size()) {
