@@ -6,9 +6,9 @@
 
 extern bool gameOver;
 
-Enemy::Enemy(std::mt19937& gen, std::uniform_int_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes)//unsigned short randomPos, unsigned short enemySize)
+Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes)//unsigned short randomPos, unsigned short enemySize)
 {
-    //initial position
+    visibility = 1;
     x = dist1(gen);
     y = 0;
     //speed = ENEMY_SPEED;
@@ -26,26 +26,24 @@ Enemy::Enemy(std::mt19937& gen, std::uniform_int_distribution<>& dist1, std::uni
 
 void Enemy::update()
 {
-    //std::cout << "ok\n";
-   // x = x - 0.01;
-    
     if (y + 0.1 < SCREEN_HEIGHT - enemySize) // - enemySize bez enemySize zniknie ca³e
     {
-        std::cout << y << "\n";
+        //std::cout << y << "\n";
         y = y + 0.1;
     }
     else {
         std::cout << "Game Over!\n";
         gameOver = 1;
     }
-   //spada, 
-   // //jeœli dotrze na sam dol to game over?
     //jesli healbar == 0, to wtedy umiera i mo¿e nowy byæ wstawiony
     
 }
 
 void Enemy::draw(sf::RenderWindow& window)
 {
-    sprite.setPosition(x, y);
-    window.draw(sprite);
+    if (visibility)
+    {
+        sprite.setPosition(x, y);
+        window.draw(sprite);
+    }
 }

@@ -8,8 +8,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
-    //std::vector<Enemy> enemies; 
-    
+    std::vector<Enemy> enemies; 
 
     std::vector<int> enemySizes = { 30,40,50 };
 
@@ -19,13 +18,16 @@ int main()
 
     std::random_device rd;  // Obtain a random seed from the hardware
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist1(5, SCREEN_WIDTH-5);
-    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1);
+    std::uniform_real_distribution<> dist1(5, SCREEN_WIDTH-5); //distribution for enemies' positions
+    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); //distributions for enemies' sizes
     
 
     Spaceship spaceship;
-    //unsigned short randomPos, enemySize;
-    Enemy enemy(gen, dist1, dist2, enemySizes);
+    //initalizing enemies
+    for (int i = 0; i < 5; i++)
+    {
+        enemies.push_back(Enemy(gen, dist1, dist2, enemySizes));
+    }
 
     // # The Game Loop
     while (window.isOpen())
@@ -51,16 +53,23 @@ int main()
             }
             if (FRAME_DURATION > lag)
             {
-                window.clear();
+                //updating spaceship and enemies
                 spaceship.update();
+                for (auto& enemy : enemies) {
+                    enemy.update();
+                }
+
+                window.clear();
+
+                //drawing the sprites on the screen
                 spaceship.draw(window);
-                //wszystkie enemies musza byc zupsatowane
-                //dodawane po pewnym okresie czasu
-                enemy.update();
-                /* if (enemies.size() < 5)
-                 {*/
-                enemy.draw(window);
-                /*}*/
+                for (auto& enemy : enemies)
+                {
+                    if (enemy.visibility)
+                    {
+                        enemy.draw(window);
+                    }
+                }
 
                 window.display();
             }
