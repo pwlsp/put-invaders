@@ -6,6 +6,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
     Spaceship spaceship;
+    Enemy enemy;
+    //std::vector<Enemy> enemies; //daæ, ¿e siê pojawiaj¹ siê
 
     // # The Game Loop
     while (window.isOpen())
@@ -21,6 +23,9 @@ int main()
         window.clear();
         spaceship.update();
         spaceship.draw(window);
+        enemy.update();
+        enemy.draw(window);
+        
         window.display();
     }
 
