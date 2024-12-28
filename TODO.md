@@ -1,1 +1,2 @@
 - [ ] zrobić pociski, na które będzie można reagować
+- [ ] game over

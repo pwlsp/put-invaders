@@ -8,7 +8,7 @@ extern bool gameOver;
 
 Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes)//unsigned short randomPos, unsigned short enemySize)
 {
-    visibility = 1;
+    visibility = 0;
     x = dist1(gen);
     y = 0;
     //speed = ENEMY_SPEED;
@@ -32,7 +32,7 @@ void Enemy::update()
         y = y + 0.1;
     }
     else {
-        std::cout << "Game Over!\n";
+        std::cout << "Game Over!\t" << gameOver << "\n";
         gameOver = 1;
     }
     //jesli healbar == 0, to wtedy umiera i mo¿e nowy byæ wstawiony

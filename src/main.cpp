@@ -8,6 +8,8 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
+    int frameCount = 0, spawnInterval = 2000, enemyCount = 1, activeEnemies = 0;
+
     std::vector<Enemy> enemies; 
 
     std::vector<int> enemySizes = { 30,40,50 };
@@ -18,7 +20,7 @@ int main()
 
     std::random_device rd;  // Obtain a random seed from the hardware
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist1(5, SCREEN_WIDTH-5); //distribution for enemies' positions
+    std::uniform_real_distribution<> dist1(10, SCREEN_WIDTH-10); //distribution for enemies' positions
     std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); //distributions for enemies' sizes
     
 
@@ -28,6 +30,7 @@ int main()
     {
         enemies.push_back(Enemy(gen, dist1, dist2, enemySizes));
     }
+    enemies[0].visibility = 1;
 
     // # The Game Loop
     while (window.isOpen())
@@ -41,22 +44,41 @@ int main()
         sf::Event event;
         while (FRAME_DURATION <= lag)
         {
-            //std::cout << "Frame rate\n";
+            std::cout << "Frame count\t " << frameCount << "\n";
             lag -= FRAME_DURATION;
 
             while (window.pollEvent(event))
             {
+                std::cout << "check game over\t" << gameOver << "\n";
                 if (event.type == sf::Event::Closed or gameOver)
                 {
                     window.close();
                 }
+
             }
+            frameCount++;
             if (FRAME_DURATION > lag)
             {
+                if (frameCount % spawnInterval == 0 && activeEnemies < enemies.size())
+                {
+                    std::cout << "NEW ENEMY APPEARED\n" << "\t" << enemyCount << " " << activeEnemies << "\n";
+                    enemies[enemyCount].visibility = 1;
+                    activeEnemies++;
+                    if (enemyCount + 1 == enemies.size()) {
+                        enemyCount = 0;
+                    }
+                    else
+                    {
+                        enemyCount++;
+                    }
+                }
                 //updating spaceship and enemies
                 spaceship.update();
                 for (auto& enemy : enemies) {
-                    enemy.update();
+                    if (enemy.visibility)
+                    {
+                        enemy.update();
+                    }
                 }
 
                 window.clear();
