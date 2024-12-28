@@ -1,12 +1,15 @@
 #include "../include/define_include.h"
 #include "../include/config.h"
 
+bool gameOver = 0;
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
     //std::vector<Enemy> enemies; 
+    
 
     std::vector<int> enemySizes = { 30,40,50 };
 
@@ -41,7 +44,7 @@ int main()
 
             while (window.pollEvent(event))
             {
-                if (event.type == sf::Event::Closed)
+                if (event.type == sf::Event::Closed or gameOver)
                 {
                     window.close();
                 }
