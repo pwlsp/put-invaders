@@ -61,5 +61,5 @@ void Spaceship::draw(sf::RenderWindow &window)
         window.draw(weaponry.bullet_sprite);
     }
 
-    std::cout << weaponry.bullets.size() << std::endl;
+    // std::cout << weaponry.bullets.size() << std::endl;
 }
