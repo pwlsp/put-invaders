@@ -20,27 +20,35 @@ int main()
 
     std::random_device rd;  // Obtain a random seed from the hardware
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist1(10, SCREEN_WIDTH-10); //distribution for enemies' positions
-    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); //distributions for enemies' sizes
+    std::uniform_real_distribution<> dist1(10, SCREEN_WIDTH-10); // Distribution for enemies' positions
+    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); // Distributions for enemies' sizes
     
 
     Spaceship spaceship;
-    //initalizing enemies
-    for (int i = 0; i < 5; i++)
+    // Initalizing enemies
+    sf::Texture enemy_texture;
+    
+    if (!enemy_texture.loadFromFile("res/enemies/rock.png"))
     {
-        enemies.push_back(Enemy(gen, dist1, dist2, enemySizes));
+        std::cout << "File opening error\n";
+    }
+
+    for (int i = 0; i < 1; i++)
+    {
+        Enemy enemy(gen, dist1, dist2, enemySizes, enemy_texture);
+        enemies.push_back(enemy);
     }
     enemies[0].visibility = 1;
 
-    // # The Game Loop
+    // The Game Loop
     while (window.isOpen())
     {
-        //Making the game frame rate independent.
+        // Making the game frame rate independent.
         std::chrono::microseconds deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previousTime);
         lag += deltaTime;
         previousTime += deltaTime;
         
-        // # Managing window closing
+        // Managing window closing
         sf::Event event;
         while (FRAME_DURATION <= lag)
         {
@@ -72,7 +80,7 @@ int main()
                         enemyCount++;
                     }
                 }
-                //updating spaceship and enemies
+                // Updating spaceship and enemies
                 spaceship.update();
                 for (auto& enemy : enemies) {
                     if (enemy.visibility)
@@ -83,7 +91,7 @@ int main()
 
                 window.clear();
 
-                //drawing the sprites on the screen
+                // Drawing the sprites on the screen
                 spaceship.draw(window);
                 for (auto& enemy : enemies)
                 {

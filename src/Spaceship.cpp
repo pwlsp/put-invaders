@@ -9,15 +9,16 @@ Spaceship::Spaceship()
     y = SCREEN_HEIGHT - SPACESHIP_SIZE - 5.0;
     speed = SS_INITIAL_SPEED;
 
-    if (!texture.loadFromFile("r"))
+    // configuring spaceship's sprite:
+    if (!texture.loadFromFile("res/spaceships/red.png"))
     {
         std::cout << "File opening error\n";
     }
-
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, SPACESHIP_SIZE, SPACESHIP_SIZE));
 
-    if (!weaponry.bullet_texture.loadFromFile("res/green.png"))
+    // configuring bullet's sprite:
+    if (!weaponry.bullet_texture.loadFromFile("res/bullets/green.png"))
     {
         std::cout << "File opening error\n";
     }
@@ -53,7 +54,6 @@ void Spaceship::update()
 void Spaceship::draw(sf::RenderWindow &window)
 {
     sprite.setPosition(x, y);
-
     window.draw(sprite);
 
     for(Bullet& bullet : weaponry.bullets){
@@ -61,5 +61,5 @@ void Spaceship::draw(sf::RenderWindow &window)
         window.draw(weaponry.bullet_sprite);
     }
 
-    std::cout << weaponry.bullets.size() << std::endl;
+    // std::cout << weaponry.bullets.size() << std::endl;
 }
