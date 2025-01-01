@@ -28,19 +28,31 @@ Spaceship::Spaceship()
 
 void Spaceship::update()
 {
+    // Updating existing bullets
     weaponry.bullet_cooldown = std::max<short>(0, weaponry.bullet_cooldown - 1);
-    for(Bullet& bullet : weaponry.bullets){
+    for (Bullet &bullet : weaponry.bullets)
+    {
         bullet.y -= weaponry.bullet_speed;
+    }
+    // Deleting bullets out of screen
+    int iter = 0;
+    while(iter < weaponry.bullets.size()){
+        if(weaponry.bullets[iter].y <= -weaponry.bullet_height){
+            weaponry.bullets.erase(weaponry.bullets.begin() + iter);
+        }
+        else{
+            ++iter;
+        }
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         x = std::max<float>(SCREEN_MARGIN, x - speed);
     }
-    
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
-        x = std::min<float>(SCREEN_WIDTH-SPACESHIP_SIZE-SCREEN_MARGIN, x + speed);
+        x = std::min<float>(SCREEN_WIDTH - SPACESHIP_SIZE - SCREEN_MARGIN, x + speed);
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && weaponry.bullet_cooldown == 0)
@@ -56,10 +68,11 @@ void Spaceship::draw(sf::RenderWindow &window)
     sprite.setPosition(x, y);
     window.draw(sprite);
 
-    for(Bullet& bullet : weaponry.bullets){
+    for (Bullet &bullet : weaponry.bullets)
+    {
         weaponry.bullet_sprite.setPosition(bullet.x, bullet.y);
         window.draw(weaponry.bullet_sprite);
     }
 
-    // std::cout << weaponry.bullets.size() << std::endl;
+    std::cout << weaponry.bullets.size() << std::endl;
 }
