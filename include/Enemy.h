@@ -15,7 +15,6 @@ private:
 
     float x;
     float y;
-    //float speed;
     int enemySize;
     
 
@@ -26,16 +25,7 @@ public:
     bool update(Spaceship& spaceship);
 
     sf::IntRect hitBox()
-    //sf::RectangleShape hitBox()
     {
-        /*sf::IntRect r1(x, y, enemySize, enemySize);
-        sf::RectangleShape rectangle(sf::Vector2f(r1.width+1, r1.height));
-        rectangle.setPosition(static_cast<float>(r1.left), static_cast<float>(r1.top));
-        rectangle.setFillColor(sf::Color::Red);
-
-        std::cout << "Rectangle Position: " << r1.left << ", " << r1.top << std::endl;
-        std::cout << "Rectangle Size: " << r1.width << " x " << r1.height << std::endl;*/
-
         return sf::IntRect(x, y, enemySize, enemySize);
 
     }
