@@ -8,7 +8,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
-    int frameCount = 0, spawnInterval = 4000, enemyCount = 1, activeEnemies = 0;
+    int frameCount = 0, spawnInterval = 2000;
 
     std::vector<Enemy> enemies; 
 
@@ -20,7 +20,7 @@ int main()
 
     std::random_device rd;  // Obtain a random seed from the hardware
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist1(10, SCREEN_WIDTH-10); // Distribution for enemies' positions
+    std::uniform_real_distribution<> dist1(60, SCREEN_WIDTH-60); // Distribution for enemies' positions
     std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); // Distributions for enemies' sizes
     
 
@@ -28,17 +28,11 @@ int main()
     // Initalizing enemies
     sf::Texture enemy_texture;
     
-    if (!enemy_texture.loadFromFile("res/enemies/rock.png"))
+    if (!enemy_texture.loadFromFile("res/enemies/cobble.png"))
     {
         std::cout << "File opening error\n";
     }
 
-    for (int i = 0; i < 1; i++)
-    {
-        Enemy enemy(gen, dist1, dist2, enemySizes, enemy_texture);
-        enemies.push_back(enemy);
-    }
-    enemies[0].visibility = 1;
 
     // The Game Loop
     while (window.isOpen())
@@ -52,7 +46,7 @@ int main()
         sf::Event event;
         while (FRAME_DURATION <= lag)
         {
-            //std::cout << "Frame count\t " << frameCount << "\n";
+            // std::cout << "Frame count\t " << frameCount << "\n";
             lag -= FRAME_DURATION;
 
             while (window.pollEvent(event))
@@ -67,26 +61,18 @@ int main()
             frameCount++;
             if (FRAME_DURATION > lag)
             {
-                if (frameCount % spawnInterval == 0 && activeEnemies < enemies.size())
+                if (frameCount % spawnInterval == 0)
                 {
-                    //std::cout << "NEW ENEMY APPEARED\n" << "\t" << enemyCount << " " << activeEnemies << "\n";
-                    enemies[enemyCount].visibility = 1;
-                    activeEnemies++;
-                    if (enemyCount + 1 == enemies.size()) {
-                        enemyCount = 0;
-                    }
-                    else
-                    {
-                        enemyCount++;
-                    }
+                    Enemy enemy(gen, dist1, dist2, enemySizes, enemy_texture);
+                    enemies.push_back(enemy);
+                    std::cout << "enemy added!" << enemies.size();
                 }
                 // Updating spaceship and enemies
                 spaceship.update();
                 for (auto& enemy : enemies) {
-                    if (enemy.visibility)
-                    {
-                        enemy.update();
-                    }
+                    
+                    enemy.update();
+                    
                 }
 
                 window.clear();
@@ -95,10 +81,7 @@ int main()
                 spaceship.draw(window);
                 for (auto& enemy : enemies)
                 {
-                    if (enemy.visibility)
-                    {
-                        enemy.draw(window);
-                    }
+                    enemy.draw(window);
                 }
 
                 window.display();

@@ -14,7 +14,7 @@ Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::un
     enemySize = enemySizes[dist2(gen)];
 
     sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(0, 0, SPACESHIP_SIZE, SPACESHIP_SIZE));
+    sprite.setTextureRect(sf::IntRect(0, 0, enemySize, enemySize));
 }
 
 void Enemy::update()
