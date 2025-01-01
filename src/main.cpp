@@ -10,7 +10,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
-    int frameCount = 0, spawnInterval = 1000;
+    int frameCount = 0, spawnInterval = 2000;
 
     Spaceship spaceship;
 
@@ -36,6 +36,7 @@ int main()
         std::cout << "File opening error\n";
     }
 
+    int iterator;
 
     // The Game Loop
     while (window.isOpen())
@@ -72,9 +73,16 @@ int main()
 
                 // Updating spaceship and enemies
                 spaceship.update();
+                iterator = 0;
                 for (Enemy& enemy : enemies) {
                     
-                    enemy.update(spaceship);
+                    if (!enemy.update(spaceship)) {
+                        enemies.erase(enemies.begin() + iterator);
+                    }
+                    else
+                    {
+                        iterator++;
+                    }
                 }
 
                 window.clear();

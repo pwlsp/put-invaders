@@ -25,9 +25,7 @@ public:
 
     void deleteBullet(int i)
     {
-        std::cout << "usuwam: " << i << "\n";
         weaponry.bullets.erase(weaponry.bullets.begin() + i);
-        std::cout << "usuniete\n";
     }
 
     std::vector<Bullet> getBulletsPos()

@@ -19,7 +19,7 @@ Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::un
     sprite.setTextureRect(sf::IntRect(0, 0, enemySize, enemySize));
 }
 
-void Enemy::update(Spaceship& spaceship)
+bool Enemy::update(Spaceship& spaceship)
 {
     if (y + 0.1 < SCREEN_HEIGHT - enemySize) 
     {
@@ -37,15 +37,16 @@ void Enemy::update(Spaceship& spaceship)
         if (hitBox().intersects(spaceship.hitBox(i)))
         {
             spaceship.deleteBullet(i); 
-            bullets.erase(bullets.begin() + i);  
+            bullets.erase(bullets.begin() + i); 
+            return false;
         }
         else
         {
             i++;
         }
 
-   }
-    
+    }
+    return true;
 }
 
 void Enemy::draw(sf::RenderWindow &window)
