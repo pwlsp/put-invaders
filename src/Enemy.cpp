@@ -3,6 +3,8 @@
 #include <random>
 
 #include "../include/Enemy.h"
+#include "../include/Spaceship.h"
+#include "../include/Bullet.h"
 
 extern bool gameOver;
 
@@ -17,18 +19,35 @@ Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::un
     sprite.setTextureRect(sf::IntRect(0, 0, enemySize, enemySize));
 }
 
-void Enemy::update()
+void Enemy::update(Spaceship& spaceship)
 {
-    if (y + 0.1 < SCREEN_HEIGHT - enemySize) // - enemySize bez enemySize zniknie ca�e
+    if (y + 0.1 < SCREEN_HEIGHT - enemySize) 
     {
-        //std::cout << y << "\n";
         y = y + 0.1;
     }
     else {
-        std::cout << "Game Over!\t" << gameOver << "\n";
-        gameOver = 1;
+       std::cout << "Game Over!\t" << gameOver << "\n";
+       exit(0);
     }
-    // Jesli healthbar == 0, to wtedy umiera i mo�e nowy by� wstawiony
+
+    std::vector<Bullet> bullets = spaceship.getBulletsPos();
+    int i = 0; 
+    while (i < bullets.size())
+    {
+        if (hitBox().intersects(spaceship.hitBox(i)))
+        {
+            
+            std::cout << "bullet dead: " << i << "\n";
+            exit(0);
+            bullets.erase(bullets.begin() + i);
+            
+        }
+        else
+        {
+            i++;
+        }
+
+   }
     
 }
 
@@ -37,3 +56,4 @@ void Enemy::draw(sf::RenderWindow &window)
     sprite.setPosition(x, y);
     window.draw(sprite);
 }
+

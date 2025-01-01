@@ -1,5 +1,7 @@
 #include "../include/define_include.h"
 #include "../include/config.h"
+#include  "../include/Spaceship.h"
+#include "../include/Enemy.h"
 
 bool gameOver = 0;
 
@@ -8,11 +10,13 @@ int main()
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
 
   
-    int frameCount = 0, spawnInterval = 2000;
+    int frameCount = 0, spawnInterval = 1000;
+
+    Spaceship spaceship;
 
     std::vector<Enemy> enemies; 
 
-    std::vector<int> enemySizes = { 30,40,50 };
+    std::vector<int> enemySizes = { 45, 50, 55, 60 };
 
     std::chrono::microseconds lag(0);
     std::chrono::steady_clock::time_point previousTime;
@@ -22,9 +26,8 @@ int main()
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dist1(60, SCREEN_WIDTH-60); // Distribution for enemies' positions
     std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); // Distributions for enemies' sizes
-    
 
-    Spaceship spaceship;
+    
     // Initalizing enemies
     sf::Texture enemy_texture;
     
@@ -65,14 +68,13 @@ int main()
                 {
                     Enemy enemy(gen, dist1, dist2, enemySizes, enemy_texture);
                     enemies.push_back(enemy);
-                    std::cout << "enemy added!" << enemies.size();
                 }
+
                 // Updating spaceship and enemies
                 spaceship.update();
-                for (auto& enemy : enemies) {
+                for (Enemy& enemy : enemies) {
                     
-                    enemy.update();
-                    
+                    enemy.update(spaceship);
                 }
 
                 window.clear();
@@ -83,7 +85,6 @@ int main()
                 {
                     enemy.draw(window);
                 }
-
                 window.display();
             }
         }

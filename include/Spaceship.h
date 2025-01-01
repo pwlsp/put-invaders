@@ -4,6 +4,7 @@
 
 #include "config.h"
 #include "Weaponry.h"
+#include "Bullet.h"
 
 class Spaceship
 {
@@ -21,4 +22,14 @@ public:
     Spaceship();
     void draw(sf::RenderWindow &window);
     void update();
+
+    std::vector<Bullet> getBulletsPos()
+    {
+        return weaponry.bullets;
+    }
+
+    sf::IntRect hitBox(int i)
+    {
+        return sf::IntRect(weaponry.bullets[i].x, weaponry.bullets[i].y, weaponry.bullet_width, weaponry.bullet_height);
+    }
 };

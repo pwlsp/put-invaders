@@ -61,10 +61,13 @@ void Spaceship::update()
         weaponry.bullets.push_back(new_bullet);
         weaponry.bullet_cooldown = BULLET_COOLDOWN;
     }
+
+
 }
 
 void Spaceship::draw(sf::RenderWindow &window)
 {
+    
     sprite.setPosition(x, y);
     window.draw(sprite);
 
@@ -73,6 +76,7 @@ void Spaceship::draw(sf::RenderWindow &window)
         weaponry.bullet_sprite.setPosition(bullet.x, bullet.y);
         window.draw(weaponry.bullet_sprite);
     }
+    
 
     //std::cout << weaponry.bullets.size() << std::endl;
 }
