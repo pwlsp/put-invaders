@@ -32,15 +32,12 @@ void Enemy::update(Spaceship& spaceship)
 
     std::vector<Bullet> bullets = spaceship.getBulletsPos();
     int i = 0; 
-    while (i < bullets.size())
+    while (bullets.size() != 0 && i < bullets.size())
     {
         if (hitBox().intersects(spaceship.hitBox(i)))
         {
-            
-            std::cout << "bullet dead: " << i << "\n";
-            exit(0);
-            bullets.erase(bullets.begin() + i);
-            
+            spaceship.deleteBullet(i); 
+            bullets.erase(bullets.begin() + i);  
         }
         else
         {
