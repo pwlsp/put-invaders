@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
-#include "Weaponry.h"
 #include "Bullet.h"
 
 class Spaceship
@@ -16,24 +15,30 @@ protected:
     float y;
     float speed;
 
-    Weaponry weaponry;
+    std::vector<Bullet> bullets;
+    sf::Sprite bullet_sprite;
+    sf::Texture bullet_texture;
+
+    float bullet_speed = BULLET_SPEED;
+    unsigned short bullet_cooldown = 0;
+    unsigned short bullet_width = 6;
+    unsigned short bullet_height = 18;
 
 public:
-    Spaceship();
     void draw(sf::RenderWindow &window);
 
     void deleteBullet(int i)
     {
-        weaponry.bullets.erase(weaponry.bullets.begin() + i);
+        bullets.erase(bullets.begin() + i);
     }
 
     std::vector<Bullet> getBulletsPos()
     {
-        return weaponry.bullets;
+        return bullets;
     }
 
     sf::IntRect hitBox(int i)
     {
-        return sf::IntRect(weaponry.bullets[i].x, weaponry.bullets[i].y, weaponry.bullet_width, weaponry.bullet_height);
+        return sf::IntRect(bullets[i].x, bullets[i].y, bullet_width, bullet_height);
     }
 };

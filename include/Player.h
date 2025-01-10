@@ -3,7 +3,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
-#include "Weaponry.h"
 #include "Bullet.h"
 #include "Spaceship.h"
 

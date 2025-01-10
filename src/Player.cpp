@@ -18,27 +18,27 @@ Player::Player()
     sprite.setTextureRect(sf::IntRect(0, 0, SPACESHIP_SIZE, SPACESHIP_SIZE));
 
     // configuring bullet's sprite:
-    if (!weaponry.bullet_texture.loadFromFile("res/bullets/green.png"))
+    if (!bullet_texture.loadFromFile("res/bullets/green.png"))
     {
         std::cout << "File opening error\n";
     }
-    weaponry.bullet_sprite.setTexture(weaponry.bullet_texture);
-    weaponry.bullet_sprite.setTextureRect(sf::IntRect(0, 0, weaponry.bullet_width, weaponry.bullet_height));
+    bullet_sprite.setTexture(bullet_texture);
+    bullet_sprite.setTextureRect(sf::IntRect(0, 0, bullet_width, bullet_height));
 }
 
 void Player::update()
 {
     // Updating existing bullets
-    weaponry.bullet_cooldown = std::max<short>(0, weaponry.bullet_cooldown - 1);
-    for (Bullet &bullet : weaponry.bullets)
+    bullet_cooldown = std::max<short>(0, bullet_cooldown - 1);
+    for (Bullet &bullet : bullets)
     {
-        bullet.y -= weaponry.bullet_speed;
+        bullet.y -= bullet_speed;
     }
     // Deleting bullets out of screen
     int iter = 0;
-    while(iter < weaponry.bullets.size()){
-        if(weaponry.bullets[iter].y <= -weaponry.bullet_height){
-            weaponry.bullets.erase(weaponry.bullets.begin() + iter);
+    while(iter < bullets.size()){
+        if(bullets[iter].y <= -bullet_height){
+            bullets.erase(bullets.begin() + iter);
         }
         else{
             ++iter;
@@ -55,13 +55,11 @@ void Player::update()
         x = std::min<float>(SCREEN_WIDTH - SPACESHIP_SIZE - SCREEN_MARGIN, x + speed);
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && weaponry.bullet_cooldown == 0)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && bullet_cooldown == 0)
     {
-        Bullet new_bullet(x + SPACESHIP_SIZE / 2 - weaponry.bullet_width / 2, y - weaponry.bullet_height);
-        weaponry.bullets.push_back(new_bullet);
-        weaponry.bullet_cooldown = BULLET_COOLDOWN;
+        Bullet new_bullet(x + SPACESHIP_SIZE / 2 - bullet_width / 2, y - bullet_height);
+        bullets.push_back(new_bullet);
+        bullet_cooldown = BULLET_COOLDOWN;
     }
-
-
 }
 
