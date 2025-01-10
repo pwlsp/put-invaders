@@ -10,10 +10,10 @@ extern bool gameOver;
 
 Enemy::Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes, sf::Texture &texture)//unsigned short randomPos, unsigned short enemySize)
 {
-    visibility = 1;
-    x = dist1(gen);
-    y = 0;
     enemySize = enemySizes[dist2(gen)];
+
+    x = dist1(gen);
+    y = -enemySize;
 
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0, 0, enemySize, enemySize));
