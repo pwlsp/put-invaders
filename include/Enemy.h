@@ -15,17 +15,21 @@ private:
 
     float x;
     float y;
-    int enemySize;
+    float speed = 0.1;
+
+    int enemyWidth;
+    int enemyHeight;
     
 
 public:
-    Enemy(std::mt19937& gen, std::uniform_real_distribution<>& dist1, std::uniform_int_distribution<>& dist2, std::vector<int> enemySizes, sf::Texture &texture);//unsigned short randomPos, unsigned short enemySize);
+    Enemy(std::vector<int> enemySizes, float speed, std::uniform_int_distribution<>& dist2, sf::Texture &texture);//unsigned short randomPos, unsigned short enemySize);
+    Enemy(int enemyWidth, int enemyHeight, float speed, sf::Texture &texture);
     void draw(sf::RenderWindow &window);
     bool update(Spaceship& spaceship);
 
     sf::IntRect hitBox()
     {
-        return sf::IntRect(x, y, enemySize, enemySize);
+        return sf::IntRect(x, y, enemyWidth, enemyHeight);
 
     }
 };

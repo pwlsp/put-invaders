@@ -3,7 +3,7 @@
 #include <chrono>
 
 constexpr unsigned short SCREEN_WIDTH = 1100;
-constexpr unsigned short SCREEN_HEIGHT = 850;
+constexpr unsigned short SCREEN_HEIGHT = 950;
 constexpr unsigned short SPACESHIP_SIZE = 50;
 constexpr unsigned short SCREEN_MARGIN = 5;
 constexpr unsigned short BULLET_COOLDOWN = 300;

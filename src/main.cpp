@@ -9,33 +9,43 @@ bool gameOver = 0;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
-
   
-    int frameCount = 0, spawnInterval = 2000;
+    int frameCount = 0, rockSpawnInterval = 2000, cometSpawnInterval = 10000;
 
-    Player player;
 
-    std::vector<Enemy> enemies; 
-
-    std::vector<int> enemySizes = { 45, 50, 55, 60 };
-
-    std::chrono::microseconds lag(0);
-    std::chrono::steady_clock::time_point previousTime;
-    previousTime  = std::chrono::steady_clock::now();
-
-    std::random_device rd;  // Obtain a random seed from the hardware
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dist1(60, SCREEN_WIDTH-60); // Distribution for enemies' positions
-    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); // Distributions for enemies' sizes
-
-    
-    // Initalizing enemies
+    // Initalizing textures
     sf::Texture enemy_texture;
     
     if (!enemy_texture.loadFromFile("res/enemies/cobble.png"))
     {
         std::cout << "File opening error\n";
     }
+
+    sf::Texture comet_texture;
+    
+    if (!comet_texture.loadFromFile("res/enemies/comet.png"))
+    {
+        std::cout << "File opening error\n";
+    }
+
+
+    // Initalizing player and enemies
+
+    Player player;
+
+    std::vector<Enemy> enemies; 
+
+    std::vector<int> enemySizes = { 45, 50, 55, 60 };
+    std::uniform_int_distribution<> dist2(0, enemySizes.size()-1); // Distributions for enemies' sizes
+
+    std::vector<Enemy> comets;
+    // (40, 120, comet_texture)
+
+    std::chrono::microseconds lag(0);
+    std::chrono::steady_clock::time_point previousTime;
+    previousTime  = std::chrono::steady_clock::now();
+
+
 
     int iterator;
 
@@ -66,19 +76,38 @@ int main()
             frameCount++;
             if (FRAME_DURATION > lag)
             {
-                if (frameCount % spawnInterval == 0)
+                if (frameCount % rockSpawnInterval == 0)
                 {
-                    Enemy enemy(gen, dist1, dist2, enemySizes, enemy_texture);
+                    Enemy enemy(enemySizes, 0.4, dist2, enemy_texture);
                     enemies.push_back(enemy);
+                }
+
+                if (frameCount % cometSpawnInterval == 0)
+                {
+                    Enemy comet(40, 120, 0.25, comet_texture);
+                    enemies.push_back(comet);
                 }
 
                 // Updating player and enemies
                 player.update();
+                
                 iterator = 0;
                 for (Enemy& enemy : enemies) {
                     
                     if (!enemy.update(player)) {
                         enemies.erase(enemies.begin() + iterator);
+                    }
+                    else
+                    {
+                        iterator++;
+                    }
+                }
+
+                iterator = 0;
+                for (Enemy& comet : comets) {
+                    
+                    if (!comet.update(player)) {
+                        comets.erase(comets.begin() + iterator);
                     }
                     else
                     {
@@ -93,6 +122,10 @@ int main()
                 for (auto& enemy : enemies)
                 {
                     enemy.draw(window);
+                }
+                for (auto& comet : comets)
+                {
+                    comet.draw(window);
                 }
                 window.display();
             }
