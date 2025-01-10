@@ -3,6 +3,7 @@
 #include  "../include/Spaceship.h"
 #include "../include/Enemy.h"
 #include "../include/Player.h"
+#include "../include/EnemySpaceship.h"
 
 bool gameOver = 0;
 
@@ -10,24 +11,31 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "PUT Invaders", sf::Style::Close);
   
-    int frameCount = 0, rockSpawnInterval = 2000, cometSpawnInterval = 10000;
+    int frameCount = 0, rockSpawnInterval = 2000, cometSpawnInterval = 5000, enemySpaceshipSpawnInterval = 4500;
 
 
     // Initalizing textures
-    sf::Texture enemy_texture;
+    sf::Texture enemy_texture, comet_texture, enemy_spaceship_texture, enemy_bullet_texture;
     
     if (!enemy_texture.loadFromFile("res/enemies/cobble.png"))
     {
         std::cout << "File opening error\n";
     }
-
-    sf::Texture comet_texture;
     
     if (!comet_texture.loadFromFile("res/enemies/comet.png"))
     {
         std::cout << "File opening error\n";
     }
 
+    if (!enemy_spaceship_texture.loadFromFile("res/spaceships/tie.png"))
+    {
+        std::cout << "File opening error\n";
+    }
+
+    if (!enemy_bullet_texture.loadFromFile("res/bullets/red.png"))
+    {
+        std::cout << "File opening error\n";
+    }
 
     // Initalizing player and enemies
 
@@ -40,6 +48,8 @@ int main()
 
     std::vector<Enemy> comets;
     // (40, 120, comet_texture)
+
+    std::vector<EnemySpaceship> enemyspaceships; 
 
     std::chrono::microseconds lag(0);
     std::chrono::steady_clock::time_point previousTime;
@@ -78,7 +88,7 @@ int main()
             {
                 if (frameCount % rockSpawnInterval == 0)
                 {
-                    Enemy enemy(enemySizes, 0.4, dist2, enemy_texture);
+                    Enemy enemy(enemySizes, 0.1, dist2, enemy_texture);
                     enemies.push_back(enemy);
                 }
 
@@ -88,8 +98,14 @@ int main()
                     enemies.push_back(comet);
                 }
 
+                if (frameCount % enemySpaceshipSpawnInterval == 0)
+                {
+                    EnemySpaceship enemyspaceship(50, 50, 0.1, enemy_spaceship_texture, enemy_bullet_texture);
+                    enemyspaceships.push_back(enemyspaceship);
+                }
+
                 // Updating player and enemies
-                player.update();
+                player.update(enemyspaceships);
                 
                 iterator = 0;
                 for (Enemy& enemy : enemies) {
@@ -115,6 +131,18 @@ int main()
                     }
                 }
 
+                iterator = 0;
+                for (EnemySpaceship& enemyspaceship : enemyspaceships) {
+                    
+                    if (!enemyspaceship.update(player)) {
+                        enemyspaceships.erase(enemyspaceships.begin() + iterator);
+                    }
+                    else
+                    {
+                        iterator++;
+                    }
+                }
+
                 window.clear();
 
                 // Drawing the sprites on the screen
@@ -126,6 +154,10 @@ int main()
                 for (auto& comet : comets)
                 {
                     comet.draw(window);
+                }
+                for (auto& enemyspaceship : enemyspaceships)
+                {
+                    enemyspaceship.draw(window);
                 }
                 window.display();
             }

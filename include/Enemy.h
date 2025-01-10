@@ -5,17 +5,20 @@
 
 #include "config.h"
 
+static std::random_device rd;  // Obtain a random seed from the hardware
+static std::mt19937 gen(rd());
+static std::uniform_real_distribution<> dist1(60, SCREEN_WIDTH-60); // Distribution for enemies' positions
+
 class Spaceship;
 
 class Enemy
 {
-private:
+protected:
     sf::Sprite sprite;
     sf::Texture texture;
-
     float x;
     float y;
-    float speed = 0.1;
+    float speed;
 
     int enemyWidth;
     int enemyHeight;
@@ -24,7 +27,8 @@ private:
 public:
     Enemy(std::vector<int> enemySizes, float speed, std::uniform_int_distribution<>& dist2, sf::Texture &texture);//unsigned short randomPos, unsigned short enemySize);
     Enemy(int enemyWidth, int enemyHeight, float speed, sf::Texture &texture);
-    void draw(sf::RenderWindow &window);
+    Enemy();
+    virtual void draw(sf::RenderWindow &window);
     bool update(Spaceship& spaceship);
 
     sf::IntRect hitBox()

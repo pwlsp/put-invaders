@@ -1,7 +1,9 @@
 #include <iostream>
-#include <cmath>
 
 #include "../include/Player.h"
+#include "../include/EnemySpaceship.h"
+
+extern bool gameOver;
 
 Player::Player()
 {
@@ -26,9 +28,9 @@ Player::Player()
     bullet_sprite.setTextureRect(sf::IntRect(0, 0, bullet_width, bullet_height));
 }
 
-void Player::update()
+void Player::update(std::vector<EnemySpaceship> &enemyspaceships)
 {
-    // Updating existing bullets
+    // Updating existing bulletsPlayer
     bullet_cooldown = std::max<short>(0, bullet_cooldown - 1);
     for (Bullet &bullet : bullets)
     {
@@ -42,6 +44,24 @@ void Player::update()
         }
         else{
             ++iter;
+        }
+    }
+
+    for(EnemySpaceship &enemyspaceship : enemyspaceships){
+        std::vector<Bullet> playerbullets = enemyspaceship.getBulletsPos();
+        int i = 0; 
+        while (playerbullets.size() != 0 && i < playerbullets.size())
+        {
+            if (Player::hitBox().intersects(enemyspaceship.Spaceship::hitBox(i)))
+            {
+                gameOver = true;
+                std::cout << "Game Over!\t" << gameOver << "\n";
+                exit(0);
+            }
+            else
+            {
+                i++;
+            }
         }
     }
 

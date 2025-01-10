@@ -8,10 +8,6 @@
 
 extern bool gameOver;
 
-std::random_device rd;  // Obtain a random seed from the hardware
-std::mt19937 gen(rd());
-std::uniform_real_distribution<> dist1(60, SCREEN_WIDTH-60); // Distribution for enemies' positions
-
 // for random size, square, non-shooting enemies (slow rocks)
 Enemy::Enemy(std::vector<int> enemySizes, float speed, std::uniform_int_distribution<>& dist2, sf::Texture &texture) : speed(speed)//unsigned short randomPos, unsigned short enemySize)
 {
@@ -34,9 +30,12 @@ Enemy::Enemy(int enemyWidth, int enemyHeight, float speed ,sf::Texture &texture)
     sprite.setTextureRect(sf::IntRect(0, 0, enemyWidth, enemyHeight));
 }
 
+Enemy::Enemy(){
+}
+
 bool Enemy::update(Spaceship& spaceship)
 {
-    if (y + 0.1 < SCREEN_HEIGHT - enemyHeight) 
+    if (y + speed < SCREEN_HEIGHT - enemyHeight) 
     {
         y = y + speed;
     }
@@ -59,8 +58,8 @@ bool Enemy::update(Spaceship& spaceship)
         {
             i++;
         }
-
     }
+
     return true;
 }
 

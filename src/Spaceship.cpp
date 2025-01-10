@@ -14,7 +14,6 @@ void Spaceship::draw(sf::RenderWindow &window)
         bullet_sprite.setPosition(bullet.x, bullet.y);
         window.draw(bullet_sprite);
     }
-    
 
-    //std::cout << bullets.size() << std::endl;
+    // std::cout << bullets.size() << std::endl;
 }
