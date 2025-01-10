@@ -8,7 +8,7 @@
 
 class Spaceship
 {
-private:
+protected:
     sf::Sprite sprite;
     sf::Texture texture;
 
