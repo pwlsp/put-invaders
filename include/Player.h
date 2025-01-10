@@ -11,6 +11,6 @@ class Player : public Spaceship
 {
 public:
     Player();
-    void draw(sf::RenderWindow &window);
     void update();
 };
+

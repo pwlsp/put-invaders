@@ -21,7 +21,6 @@ protected:
 public:
     Spaceship();
     void draw(sf::RenderWindow &window);
-    void update();
 
     void deleteBullet(int i)
     {

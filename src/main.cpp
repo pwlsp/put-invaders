@@ -2,6 +2,7 @@
 #include "../include/config.h"
 #include  "../include/Spaceship.h"
 #include "../include/Enemy.h"
+#include "../include/Player.h"
 
 bool gameOver = 0;
 
@@ -12,7 +13,7 @@ int main()
   
     int frameCount = 0, spawnInterval = 2000;
 
-    Spaceship spaceship;
+    Player player;
 
     std::vector<Enemy> enemies; 
 
@@ -71,12 +72,12 @@ int main()
                     enemies.push_back(enemy);
                 }
 
-                // Updating spaceship and enemies
-                spaceship.update();
+                // Updating player and enemies
+                player.update();
                 iterator = 0;
                 for (Enemy& enemy : enemies) {
                     
-                    if (!enemy.update(spaceship)) {
+                    if (!enemy.update(player)) {
                         enemies.erase(enemies.begin() + iterator);
                     }
                     else
@@ -88,7 +89,7 @@ int main()
                 window.clear();
 
                 // Drawing the sprites on the screen
-                spaceship.draw(window);
+                player.draw(window);
                 for (auto& enemy : enemies)
                 {
                     enemy.draw(window);
