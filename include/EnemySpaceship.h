@@ -9,10 +9,6 @@
 
 class EnemySpaceship : public Spaceship, protected Enemy
 {
-private:
-    // float x;
-    // float y;
-    // float speed;
 public:
     EnemySpaceship(int enemyWidth, int enemyHeight, float speed, sf::Texture &enemy_spaceship_texture, sf::Texture &bullet_texture);
     bool update(Spaceship &spaceship);

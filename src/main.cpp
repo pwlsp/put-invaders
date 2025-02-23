@@ -105,7 +105,7 @@ int main()
                 }
 
                 // Updating player and enemies
-                player.update(enemyspaceships   );
+                player.update(enemyspaceships);
                 
                 iterator = 0;
                 for (Enemy& enemy : enemies) {
